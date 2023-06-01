@@ -11,12 +11,9 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('guest')->group(function () {
-    // Route::get('register', [RegisteredUserController::class, 'create'])
-    //             ->name('register');
-
-    // Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
@@ -59,6 +56,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('profile/{employee}/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
+
+    Route::put('profile/{employee}', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::get('updatePassword/{user}/change', [ProfileController::class, 'editPassword'])
+    ->name('profile.editPassword');
+    Route::put('updatePassword/{user}', [ProfileController::class, 'updatePassword'])
+    ->name('profile.updatePassword');
+
+
+});
+
+Route::middleware('admin')->group(function () {
     Route::resource('companies', CompaniesController::class);
     Route::resource('employees', EmployeesController::class);
+    Route::get('profile-{admin}/edit', [ProfileController::class, 'editAdminProfile'])->name('profileAdmin.edit');
+
+    Route::put('profile-{admin}', [ProfileController::class, 'updateAdminProfile'])->name('profileAdmin.update');
 });

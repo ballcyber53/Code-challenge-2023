@@ -15,12 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
-                        {{ __('Companies') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
-                        {{ __('Employees') }}
-                    </x-nav-link>
+                    @if (Auth::user()->is_admin)
+                        <x-nav-link :href="route('companies.index')" :active="request()->routeIs('companies.index')">
+                            {{ __('Companies') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                            {{ __('Employees') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -45,6 +47,18 @@
 
                     <x-slot name="content">
                         <!-- Authentication -->
+                        @if (Auth::user()->is_admin)
+                            <x-dropdown-link :href="route('profileAdmin.edit', Auth::id())">
+                                {{ __('Edit Profile') }}
+                            </x-dropdown-link>
+                        @else
+                            <x-dropdown-link :href="route('profile.update', $profile_id)">
+                                {{ __('Edit Profile') }}
+                            </x-dropdown-link>
+                        @endif
+                        <x-dropdown-link :href="route('profile.editPassword', Auth::id())">
+                            {{ __('Change Password') }}
+                        </x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 

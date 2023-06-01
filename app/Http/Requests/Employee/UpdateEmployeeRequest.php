@@ -26,7 +26,8 @@ class UpdateEmployeeRequest extends FormRequest
         return [
             'firstname' => 'required',
             'lastname' => 'required',
-            'company_id' => 'required|exists:companies,id',
+            // 'user_id' => 'required|exists:users,id',
+            'company_id' => 'nullable|exists:companies,id',
             'email' => 'required|email',
             'phone' => 'required',
         ];

@@ -3,6 +3,8 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Employee;
 
 class AppLayout extends Component
 {
@@ -13,6 +15,14 @@ class AppLayout extends Component
      */
     public function render()
     {
-        return view('layouts.app');
+        if(Auth::user()->is_admin == true)
+        {
+            return view('layouts.app');
+        }else{
+            $profile_id = Employee::where('user_id',Auth::id())->first();
+            return view('layouts.app',[
+                'profile_id' => $profile_id,
+            ]);
+        }
     }
 }

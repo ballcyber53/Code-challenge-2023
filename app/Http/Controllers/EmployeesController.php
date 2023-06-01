@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 use App\Http\Requests\Employee\CreateEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Models\Company;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeesController extends Controller
 {
@@ -28,7 +34,25 @@ class EmployeesController extends Controller
         $employee = new Employee($request->validated());
         $employee->save();
 
-        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+        $user = new User();
+        $user->name = $employee->firstname .' '. $employee->lastname;
+        $user->email = $employee->email;
+        $user->password = Hash::make(Str::random(8));
+        if($user->save())
+        {
+            $employee->user_id = $user->id;
+            $employee->update();
+        }
+
+
+        $response = Password::sendResetLink($request->only('email'));
+
+        if ($response === Password::RESET_LINK_SENT) {
+            return redirect()->route('employees.index')
+            ->with('success', 'Employee created successfully. Reset password link sent to employee email.');
+        } else {
+            return redirect()->back()->withErrors(['email' => trans($response)]);
+        }
     }
 
     public function show(Employee $employee)
@@ -53,6 +77,9 @@ class EmployeesController extends Controller
 
     public function destroy(Employee $employee)
     {
+        $user = User::findOrFail($employee->user_id);
+        $user->delete();
+
         $employee->delete();
 
         return response()->json(['message' => 'Employee deleted successfully.']);

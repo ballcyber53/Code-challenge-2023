@@ -26,6 +26,7 @@ class CreateEmployeeRequest extends FormRequest
         return [
             'firstname' => 'required',
             'lastname' => 'required',
+            // 'user_id' => 'required|exists:users,id',
             'company_id' => 'required|exists:companies,id',
             'email' => 'required|email',
             'phone' => 'required',

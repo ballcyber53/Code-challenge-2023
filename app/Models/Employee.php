@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\Employee\CreateEmployeeRequest;
-use App\Http\Requests\Employee\UpdateEmployeeRequest;
-
+use App\Models\User;
 class Employee extends Model
 {
     use HasFactory;
@@ -14,7 +12,7 @@ class Employee extends Model
     protected $guarded = [];
 
 
-    protected $fillable = ['firstname', 'lastname', 'company_id', 'email', 'phone'];
+    protected $fillable = ['firstname', 'lastname', 'user_id', 'company_id', 'email', 'phone'];
 
     public function company()
     {
@@ -25,4 +23,8 @@ class Employee extends Model
     {
         return $this->with('company')->get();
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+   }
 }
