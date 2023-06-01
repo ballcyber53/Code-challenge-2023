@@ -16,10 +16,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
 <body class="font-sans antialiased">
+    @include('sweetalert::alert')
+
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
 
@@ -36,21 +40,5 @@
         </main>
     </div>
 </body>
-<!-- สร้างและเรียกใช้ไฟล์ CSS ของ DataTables -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-
-<!-- สร้างและเรียกใช้ไฟล์ JavaScript ของ DataTables -->
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // เลือกตารางที่ต้องการเปลี่ยนเป็น DataTables
-        $('#employees-table').DataTable({
-            pageLength: 3,
-            paging: false, // ไม่แสดง pagination
-            searching: false, // ไม่แสดงช่องค้นหา
-            info: false, // ไม่แสดงข้อมูลเกี่ยวกับจำนวนรายการทั้งหมด
-        });
-    });
-</script>
 
 </html>

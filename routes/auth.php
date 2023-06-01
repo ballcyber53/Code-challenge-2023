@@ -59,14 +59,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // Route::get('/companies', function () {
-    //     return view('companies.index');
-    // })->name('companies');
-
-    // Route::get('/employees', function () {
-    //     return view('employees.index');
-    // })->name('employees');
     Route::resource('companies', CompaniesController::class);
-Route::resource('employees', EmployeesController::class);
+    Route::resource('employees', EmployeesController::class);
 });
