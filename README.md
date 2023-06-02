@@ -5,10 +5,12 @@ Clone the repository:
 git clone https://github.com/ballcyber53/Code-challenge-2023.git
 Navigate to the project directory:
 bash
-cd your-project
+cd Code-challenge-2023
 
 Install dependencies:
 composer install
+npm install
+npm run dev
 
 the environment file:
 copy or rename .env.example to .env
