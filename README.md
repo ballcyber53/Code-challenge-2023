@@ -7,6 +7,50 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+Installation
+Follow these steps to install and set up the project locally:
+
+Clone the repository:
+git clone https://github.com/your-username/your-project.git
+Navigate to the project directory:
+bash
+cd your-project
+
+Install dependencies:
+composer install
+
+the environment file:
+copy or rename .env.example to .env
+
+Generate application key:
+php artisan key:generate
+
+Configure the database:
+Open the .env file and update the database connection details:
+DB_HOST=your-database-host
+DB_PORT=your-database-port
+DB_DATABASE=your-database-name
+DB_USERNAME=your-database-username
+DB_PASSWORD=your-database-password
+
+Run database migrations and seeders:
+php artisan migrate
+php artisan db:seed
+
+Run Storage Link:
+php artisan storage:link
+
+Configure the email:
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=username
+MAIL_PASSWORD=password
+MAIL_ENCRYPTION=tls
+
+Start the development server:
+php artisan serve
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
